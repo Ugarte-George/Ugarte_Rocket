@@ -82,8 +82,8 @@ ready(() => {
   //***********  fadeInTL  ****************
   function fadeInTL(){
     let tl = gsap.timeline();
-    tl.from ("#background_fill", {alpha: 0, duration: 2, scale: 20})
-    .from ("#clouds_all ", {alpha: 0, duration: 3}, "-=1")
+    tl.from ("#background_fill", {alpha: 0, duration: 1, scale: 20})
+    .from ("#clouds_all ", {alpha: 0, duration: 2}, "-=1")
 
     ;//tlEND
     return tl;
@@ -94,11 +94,11 @@ ready(() => {
   //*********** zoomTL ****************
   function zoomTL(){
     let tl = gsap.timeline();
-    tl.from ("#mountains", {duration: 4, alpha: 0, scale: 10, y: "+=1500", ease: "power4.out"}, "zoom")
+    tl.from ("#mountains", {duration: 2.5, alpha: 0, scale: 10, y: "+=1500", ease: "power4.out"}, "zoom")
       .from ("#moon", {duration: 3, y: "-=800", ease: "bounce.out"}, "zoom")
-      .from ("#landscape_dark", {duration: 2, alpha: 0, scale:5, y:"+=400", ease: "power4.out"}, "zoom")
-      .from ("#landscape_light", {duration: 3, alpha: 0, scale:2, y:"+=550", ease: "power4.out"}, "zoom")
-      .from ("#foreground, #rocket, #smoke", {duration: 2, alpha: 0, scale:1, y:"+=550", ease: "power4.out"})
+      .from ("#landscape_dark", {duration: 1, alpha: 0, scale:5, y:"+=400", ease: "power4.out"}, "zoom")
+      .from ("#landscape_light", {duration: 2, alpha: 0, scale:2, y:"+=550", ease: "power4.out"}, "zoom")
+      .from ("#foreground, #rocket, #smoke", {duration: 1, alpha: 0, scale:1, y:"+=550", ease: "power4.out"})
       
     
 
@@ -111,11 +111,11 @@ ready(() => {
 
   function rocketTL(){
     let tl = gsap.timeline();
-    tl.to ("#rocket", {duration: 5, x: "+=2", ease: "myWiggle1"}, "zoomOut")
-    tl.to ("#smoke1", {duration: 5, x:"+=2", y: "+=4", ease: "myWiggleRandom"}, "zoomOut")
-    tl.to ("#smoke2", {duration: 5, x:"+=3", y: "+=1", ease: "myWiggleRandom"}, "zoomOut")
-    tl.to ("#smoke3", {duration: 5, x:"+=1", y: "+=2", ease: "myWiggleRandom"}, "zoomOut")
-    tl.to ("#smoke4", {duration: 5, x:"+=4", y: "+=3", ease: "myWiggleRandom"}, "zoomOut")
+    tl.to ("#rocket", {duration: 2, x: "+=2", ease: "myWiggle1"}, "zoomOut")
+    tl.to ("#smoke1", {duration: 2, x:"+=2", y: "+=4", ease: "myWiggleRandom"}, "zoomOut")
+    tl.to ("#smoke2", {duration: 2, x:"+=3", y: "+=1", ease: "myWiggleRandom"}, "zoomOut")
+    tl.to ("#smoke3", {duration: 2, x:"+=1", y: "+=2", ease: "myWiggleRandom"}, "zoomOut")
+    tl.to ("#smoke4", {duration: 2, x:"+=4", y: "+=3", ease: "myWiggleRandom"}, "zoomOut")
     
     tl.to ("#foreground", {duration: 1.5, scale:2.5, y: "-=200", ease: "power4.out"}, "zoomOut")
     tl.to ("#rocket", {duration: 1.5, scale:2.5, y: "-=275", ease: "power4.out"}, "zoomOut")
@@ -159,7 +159,7 @@ ready(() => {
       motionPath: {
         path: "#TheImportantPath",
         align: "self",
-        autoRotate: 90
+        autoRotate: 93
 
       },
       ease: "RocketEase"
@@ -182,12 +182,12 @@ ready(() => {
 
   function finalFallTL(){
     let tl = gsap.timeline();
-    tl.to ("#smoke1", {duration: 0.5, ease: "RocketFall", y: "-=350", x: "+=1400"})
-    tl.to ("#smoke2", {duration: 0.5, ease: "RocketFall", y: "-=350", x: "+=1400"})
-    tl.to ("#smoke3", {duration: 0.5, ease: "RocketFall", y: "-=350", x: "+=1400"})
-    tl.to ("#smoke4", {duration: 0.5, ease: "RocketFall", y: "-=350", x: "+=1400"})
+    tl.to ("#smoke4", {duration: 0.5, ease: "RocketFall", y: "+=1000", x: "+=1000"})
+    tl.to ("#smoke3", {duration: 0.5, ease: "RocketFall", y: "+=1000", x: "+=1000"})
+    tl.to ("#smoke1", {duration: 0.5, ease: "RocketFall", y: "+=1000", x: "+=1000"})
+    tl.to ("#smoke2", {duration: 0.5, ease: "RocketFall", y: "+=1000", x: "+=1000"})
     tl.to ("#rocket", {duration: 1, x: "+=5", y: "+=5", rotate: 30, ease: "myWiggle3"})
-    tl.to ("#rocket", {ease: "RocketFall", y: "-=350", x: "+=1400"})
+    tl.to ("#rocket", {ease: "RocketFall", y: "+=1000", x: "+=1000", rotate: 250})
 
         ;//tlEND
         return tl;
@@ -207,8 +207,8 @@ ready(() => {
   mainTL.add(fadeInTL())
         .add(zoomTL())
         .add(rocketTL())
-        .add(liftOffTL(),"-=1.05")
-        .add(finalFallTL())
+        .add(liftOffTL(),"-=1.50")
+        .add(finalFallTL(),"-=.35")
     
 
 
