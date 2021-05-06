@@ -83,7 +83,7 @@ ready(() => {
   function fadeInTL(){
     let tl = gsap.timeline();
     tl.from ("#background_fill", {alpha: 0, duration: 1, scale: 20})
-    .from ("#clouds_all ", {alpha: 0, duration: 2}, "-=1")
+    .from ("#clouds_all ", {alpha: 0, duration: 2.5}, "-=1")
 
     ;//tlEND
     return tl;
@@ -112,10 +112,10 @@ ready(() => {
   function rocketTL(){
     let tl = gsap.timeline();
     tl.to ("#rocket", {duration: 2, x: "+=2", ease: "myWiggle1"}, "zoomOut")
-    tl.to ("#smoke1", {duration: 2, x:"+=2", y: "+=4", ease: "myWiggleRandom"}, "zoomOut")
-    tl.to ("#smoke2", {duration: 2, x:"+=3", y: "+=1", ease: "myWiggleRandom"}, "zoomOut")
-    tl.to ("#smoke3", {duration: 2, x:"+=1", y: "+=2", ease: "myWiggleRandom"}, "zoomOut")
-    tl.to ("#smoke4", {duration: 2, x:"+=4", y: "+=3", ease: "myWiggleRandom"}, "zoomOut")
+    tl.to ("#smoke1", {duration: 2, x:"+=4", y: "+=5", ease: "myWiggle1"}, "zoomOut")
+    tl.to ("#smoke2", {duration: 2, x:"+=6", y: "+=3", ease: "myWiggle2"}, "zoomOut")
+    tl.to ("#smoke3", {duration: 2, x:"+=3", y: "+=4", ease: "myWiggle1"}, "zoomOut")
+    tl.to ("#smoke4", {duration: 2, x:"+=5", y: "+=5", ease: "myWiggle2"}, "zoomOut")
     
     tl.to ("#foreground", {duration: 1.5, scale:2.5, y: "-=200", ease: "power4.out"}, "zoomOut")
     tl.to ("#rocket", {duration: 1.5, scale:2.5, y: "-=275", ease: "power4.out"}, "zoomOut")
@@ -126,10 +126,10 @@ ready(() => {
     tl.to ("#background", {duration: 1.5, scale:2.5, y: "-=1500", ease: "power4.out"}, "zoomOut")
 
     tl.to ("#rocket", {duration: 2, x: "+=2", ease: "myWiggle1"}, "zoomIn")
-    tl.to ("#smoke1", {duration: 2, x:"+=2", y: "+=4", ease: "myWiggleRandom"}, "zoomIn")
-    tl.to ("#smoke2", {duration: 2, x:"+=3", y: "+=1", ease: "myWiggleRandom"}, "zoomIn")
-    tl.to ("#smoke3", {duration: 2, x:"+=1", y: "+=2", ease: "myWiggleRandom"}, "zoomIn")
-    tl.to ("#smoke4", {duration: 2, x:"+=4", y: "+=3", ease: "myWiggleRandom"}, "zoomIn")
+    tl.to ("#smoke1", {duration: 2, x:"+=4", y: "+=5", ease: "myWiggle1"}, "zoomIn")
+    tl.to ("#smoke2", {duration: 2, x:"+=6", y: "+=3", ease: "myWiggle2"}, "zoomIn")
+    tl.to ("#smoke3", {duration: 2, x:"+=3", y: "+=4", ease: "myWiggle1"}, "zoomIn")
+    tl.to ("#smoke4", {duration: 2, x:"+=5", y: "+=5", ease: "myWiggle2"}, "zoomIn")
 
     tl.to ("#foreground", {duration: 1.5, scale:1, y: "+=200", ease: "power4.out"}, "zoomIn")
     tl.to ("#rocket", {duration: 1.5, scale:1, y: "+=275", ease: "power4.out"}, "zoomIn")
@@ -166,10 +166,11 @@ ready(() => {
       
 
     },"shakecontinued")
-    tl.to ("#smoke1", {duration: 2.5, x:"+=2", y: "+=4", ease: "myWiggleRandom"}, "shakecontinued")
-    tl.to ("#smoke2", {duration: 2.5, x:"+=3", y: "+=1", ease: "myWiggleRandom"}, "shakecontinued")
-    tl.to ("#smoke3", {duration: 2.5, x:"+=1", y: "+=2", ease: "myWiggleRandom"}, "shakecontinued")
-    tl.to ("#smoke4", {duration: 2.5, x:"+=4", y: "+=3", ease: "myWiggleRandom"}, "shakecontinued")
+
+    tl.to ("#smoke1", {duration: 2.5, x:"+=4", y: "+=5", ease: "myWiggle1"}, "shakecontinued")
+    tl.to ("#smoke2", {duration: 2.5, x:"+=6", y: "+=3", ease: "myWiggle2"}, "shakecontinued")
+    tl.to ("#smoke3", {duration: 2.5, x:"+=3", y: "+=4", ease: "myWiggle1"}, "shakecontinued")
+    tl.to ("#smoke4", {duration: 2.5, x:"+=5", y: "+=5", ease: "myWiggle2"}, "shakecontinued")
     
     
 
@@ -182,21 +183,35 @@ ready(() => {
 
   function finalFallTL(){
     let tl = gsap.timeline();
-    tl.to ("#smoke4", {duration: 0.5, ease: "RocketFall", y: "+=1000", x: "+=1000"})
-    tl.to ("#smoke3", {duration: 0.5, ease: "RocketFall", y: "+=1000", x: "+=1000"})
-    tl.to ("#smoke1", {duration: 0.5, ease: "RocketFall", y: "+=1000", x: "+=1000"})
-    tl.to ("#smoke2", {duration: 0.5, ease: "RocketFall", y: "+=1000", x: "+=1000"})
-    tl.to ("#rocket", {duration: 1, x: "+=5", y: "+=5", rotate: 30, ease: "myWiggle3"})
-    tl.to ("#rocket", {ease: "RocketFall", y: "+=1000", x: "+=1000", rotate: 250})
+    tl.to ("#smoke4", {duration: 0.2, ease: "RocketFall", y: "+=1000", x: "+=1000"})
+      .to ("#smoke3", {duration: 0.2, ease: "RocketFall", y: "+=1000", x: "+=1000"})
+      .to ("#smoke1", {duration: 0.2, ease: "RocketFall", y: "+=1000", x: "+=1000"})
+      .to ("#smoke2", {duration: 0.2, ease: "RocketFall", y: "+=1000", x: "+=1000"})
+      .to ("#rocket", {duration: 1, x: "+=5", y: "+=5", rotate: 30, ease: "myWiggle3"})
+      .to ("#rocket", {ease: "RocketFall", y: "+=1000", x: "+=1000", rotate: 250})
 
         ;//tlEND
         return tl;
 
       }
 
-  //*********** moonLandingTL ****************
+  //*********** fallOffTL ****************
+
+  function fallOffTL(){
+    let tl = gsap.timeline();
+    tl.to ("#foreground", {duration: 1,  y: "+=350", ease: "bounce.out"})
+    .to ("#landscape_light", {duration: 1,  y: "+500", ease: "bounce.out"},"-=0.750")
+    .to ("#landscape_dark", {duration: 1,  y: "+=500", ease: "bounce.out"},"-=0.750")
+    .to ("#mountains", {duration: 1,  y: "+=750", ease: "bounce.out"},"-=0.750")
+    .to ("#clouds_all", {duration: 1,  y: "+=1000", ease: "bounce.out"},"-=0.750")
+    .to ("#moon", {duration: 1,  y: "+=1000", ease: "bounce.out"},"-=0.750")
+    .to ("#background", {duration: 2, alpha:0},"-=1")
 
 
+        ;//tlEND
+        return tl;
+
+      }
   //1. set initial properties
   init();
 
@@ -209,6 +224,7 @@ ready(() => {
         .add(rocketTL())
         .add(liftOffTL(),"-=1.50")
         .add(finalFallTL(),"-=.35")
+        .add(fallOffTL())
     
 
 
