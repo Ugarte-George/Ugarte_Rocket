@@ -1,7 +1,4 @@
-<section id="svg-container">
-    <div>
-
-    <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     <path id="path-2" d="M0 .716h1024V322H0z"/>
     <path id="path-4" d="M.116.904H95V127.66H.116z"/>
@@ -24,15 +21,12 @@
     </linearGradient>
   </defs>
   <g id="Custom-Preset" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-  </g>
-  <!-- @import "svg/background.kit" -->
+    <!-- @import "svg/background.kit" -->
     <!-- @import "svg/midground.kit" -->
     <!-- @import "svg/foreground.kit" -->
     <!-- @import "svg/clouds_all.kit" -->
     <!-- @import "svg/moon.kit" -->
     <!-- @import "svg/rocket.kit" -->
     <!-- @import "svg/smoke.kit" -->
+  </g>
 </svg>
-        
-    </div>
-</section>
