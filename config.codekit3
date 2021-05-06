@@ -98,6 +98,14 @@
       "oAP" : "\/dev\/content\/svg\/foreground.html",
       "oF" : 0
     },
+    "\/dev\/content\/svg\/importantpath.kit" : {
+      "cB" : 0,
+      "ft" : 2048,
+      "hM" : 0,
+      "oA" : 1,
+      "oAP" : "\/dev\/content\/svg\/importantpath.html",
+      "oF" : 0
+    },
     "\/dev\/content\/svg\/midground.kit" : {
       "cB" : 0,
       "ft" : 2048,
@@ -120,14 +128,6 @@
       "hM" : 0,
       "oA" : 1,
       "oAP" : "\/dev\/content\/svg\/rocket.html",
-      "oF" : 0
-    },
-    "\/dev\/content\/svg\/smoke.kit" : {
-      "cB" : 0,
-      "ft" : 2048,
-      "hM" : 0,
-      "oA" : 1,
-      "oAP" : "\/dev\/content\/svg\/smoke.html",
       "oF" : 0
     },
     "\/dev\/global\/footer.kit" : {

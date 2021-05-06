@@ -4,9 +4,10 @@ import { GSDevTools } from "gsap/GSDevTools";
 
 import { CustomEase } from "gsap/CustomEase";
 import { CustomWiggle } from "gsap/CustomWiggle";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 
 //register Plugins
-gsap.registerPlugin(GSDevTools, CustomEase, CustomWiggle);
+gsap.registerPlugin(GSDevTools, CustomEase, CustomWiggle, MotionPathPlugin);
 
 //**** SELECT ELEMENTS without jQuery ****\\
 
@@ -40,7 +41,15 @@ ready(() => {
 
     CustomWiggle.create("myWiggle2", {wiggles: 50, type: "uniform"});
 
+    CustomWiggle.create("myWiggle3", {wiggles: 6, type: "anticipate"});
+    
+
     CustomWiggle.create("myWiggleRandom", {wiggles: 150, type: "random"});
+
+    CustomEase.create("RocketEase", "M0,0 C0,0 0.245,0.101 0.3,0.12 0.482,0.18 0.66,0.253 0.708,0.394 0.758,0.542 0.812,0.751 0.84,0.87 0.87,1.002 1,1 1,1 ", {y: -500 });
+
+    CustomEase.create("RocketFall", "M0,0 C0,0 0.064,0 0.138,0 0.264,0 0.466,0.029 0.514,0.05 0.684,0.124 0.704,0.139 0.834,0.314 1.006,0.546 1,1 1,1 ", {y: -500 });
+
 
     //***********  fadeInTL init ****************
 
@@ -116,6 +125,12 @@ ready(() => {
     tl.to ("#midground", {duration: 1.5, scale:2.5, y: "-=300",transformOrigin: "center", ease: "power4.out"}, "zoomOut")
     tl.to ("#background", {duration: 1.5, scale:2.5, y: "-=1500", ease: "power4.out"}, "zoomOut")
 
+    tl.to ("#rocket", {duration: 2, x: "+=2", ease: "myWiggle1"}, "zoomIn")
+    tl.to ("#smoke1", {duration: 2, x:"+=2", y: "+=4", ease: "myWiggleRandom"}, "zoomIn")
+    tl.to ("#smoke2", {duration: 2, x:"+=3", y: "+=1", ease: "myWiggleRandom"}, "zoomIn")
+    tl.to ("#smoke3", {duration: 2, x:"+=1", y: "+=2", ease: "myWiggleRandom"}, "zoomIn")
+    tl.to ("#smoke4", {duration: 2, x:"+=4", y: "+=3", ease: "myWiggleRandom"}, "zoomIn")
+
     tl.to ("#foreground", {duration: 1.5, scale:1, y: "+=200", ease: "power4.out"}, "zoomIn")
     tl.to ("#rocket", {duration: 1.5, scale:1, y: "+=275", ease: "power4.out"}, "zoomIn")
     tl.to ("#smoke", {duration: 1.5, scale:1, y: "+=100", ease: "power4.out"}, "zoomIn")
@@ -134,11 +149,50 @@ ready(() => {
 
   }
 
-  //*********** zoomOutTL ****************
+
 
   //*********** liftOffTL ****************
+  function liftOffTL(){
+    let tl = gsap.timeline();
+    tl.to ("#RocketSmoke", {
+      duration: 3,
+      motionPath: {
+        path: "#TheImportantPath",
+        align: "self",
+        autoRotate: 90
 
-  //*********** flightTL ****************
+      },
+      ease: "RocketEase"
+      
+
+    },"shakecontinued")
+    tl.to ("#smoke1", {duration: 2.5, x:"+=2", y: "+=4", ease: "myWiggleRandom"}, "shakecontinued")
+    tl.to ("#smoke2", {duration: 2.5, x:"+=3", y: "+=1", ease: "myWiggleRandom"}, "shakecontinued")
+    tl.to ("#smoke3", {duration: 2.5, x:"+=1", y: "+=2", ease: "myWiggleRandom"}, "shakecontinued")
+    tl.to ("#smoke4", {duration: 2.5, x:"+=4", y: "+=3", ease: "myWiggleRandom"}, "shakecontinued")
+    
+    
+
+    ;//tlEND
+    return tl;
+
+  }
+
+  //*********** finalFallTL ****************
+
+  function finalFallTL(){
+    let tl = gsap.timeline();
+    tl.to ("#smoke1", {duration: 0.5, ease: "RocketFall", y: "-=350", x: "+=1400"})
+    tl.to ("#smoke2", {duration: 0.5, ease: "RocketFall", y: "-=350", x: "+=1400"})
+    tl.to ("#smoke3", {duration: 0.5, ease: "RocketFall", y: "-=350", x: "+=1400"})
+    tl.to ("#smoke4", {duration: 0.5, ease: "RocketFall", y: "-=350", x: "+=1400"})
+    tl.to ("#rocket", {duration: 1, x: "+=5", y: "+=5", rotate: 30, ease: "myWiggle3"})
+    tl.to ("#rocket", {ease: "RocketFall", y: "-=350", x: "+=1400"})
+
+        ;//tlEND
+        return tl;
+
+      }
 
   //*********** moonLandingTL ****************
 
@@ -153,6 +207,8 @@ ready(() => {
   mainTL.add(fadeInTL())
         .add(zoomTL())
         .add(rocketTL())
+        .add(liftOffTL(),"-=1.05")
+        .add(finalFallTL())
     
 
 
