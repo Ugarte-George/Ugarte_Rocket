@@ -1,13 +1,13 @@
 //IMPORTS
 import { gsap } from "gsap";
-import { GSDevTools } from "gsap/GSDevTools";
+//import { GSDevTools } from "gsap/GSDevTools";
 
 import { CustomEase } from "gsap/CustomEase";
 import { CustomWiggle } from "gsap/CustomWiggle";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 
 //register Plugins
-gsap.registerPlugin(GSDevTools, CustomEase, CustomWiggle, MotionPathPlugin);
+gsap.registerPlugin(CustomEase, CustomWiggle, MotionPathPlugin);
 
 //**** SELECT ELEMENTS without jQuery ****\\
 
@@ -31,17 +31,24 @@ ready(() => {
   //add tools
   //GSDevTools.create();
 
-  /* add your code here */
+
   let mainTL = gsap.timeline({id:"main"});
+  let cloudsTL = gsap.timeline({paused:"true"});
+  let surroundTL = gsap.timeline({paused:"true"});
+  let moonFloatTL = gsap.timeline({paused:"true"});
 
 
   function init(){
 
-    CustomWiggle.create("myWiggle1", {wiggles: 100, type: "uniform"});
+    CustomWiggle.create("myWiggle1", {wiggles: 75, type: "uniform"});
 
-    CustomWiggle.create("myWiggle2", {wiggles: 50, type: "uniform"});
+    CustomWiggle.create("myWiggle2", {wiggles: 40, type: "uniform"});
 
     CustomWiggle.create("myWiggle3", {wiggles: 6, type: "anticipate"});
+
+    CustomWiggle.create("myWiggle4", {wiggles: 2, type: "uniform"});
+
+    CustomWiggle.create("CloudWiggle", {wiggles: 3, type: "uniform"});
     
 
     CustomWiggle.create("myWiggleRandom", {wiggles: 150, type: "random"});
@@ -51,7 +58,6 @@ ready(() => {
     CustomEase.create("RocketFall", "M0,0 C0,0 0.064,0 0.138,0 0.264,0 0.466,0.029 0.514,0.05 0.684,0.124 0.704,0.139 0.834,0.314 1.006,0.546 1,1 1,1 ", {y: -500 });
 
 
-    //***********  fadeInTL init ****************
 
     //*********** zoomTL init ****************
     gsap.set(["#mountains"], {transformOrigin: "center"});
@@ -67,13 +73,7 @@ ready(() => {
     gsap.set(["#smoke"], {transformOrigin: "center"});
 
     gsap.set(["#moon"], {transformOrigin: "right"});
-    //*********** spaceshipTL init ****************
 
-    //*********** liftOffTL init ****************
-
-    //*********** flightTL init ****************
-
-    //*********** moonLandingTL init ****************
 
 
   }
@@ -82,7 +82,7 @@ ready(() => {
   //***********  fadeInTL  ****************
   function fadeInTL(){
     let tl = gsap.timeline();
-    tl.from ("#background_fill", {alpha: 0, duration: 1, scale: 20})
+    tl.from ("#background_fill", {alpha: 0, duration: 1, scale: 20, OnComplete: controlClouds})        //,OnComplete: controlClouds
     .from ("#clouds_all ", {alpha: 0, duration: 2.5}, "-=1")
 
     ;//tlEND
@@ -107,37 +107,37 @@ ready(() => {
 
   }
 
-  //*********** rocketTL ****************
+  //*********** rocketTL ****************  In hindsight I probably should've made the smoke shake using a call back as opposed to having it in rocketTL
 
   function rocketTL(){
     let tl = gsap.timeline();
-    tl.to ("#rocket", {duration: 2, x: "+=2", ease: "myWiggle1"}, "zoomOut")
-    tl.to ("#smoke1", {duration: 2, x:"+=4", y: "+=5", ease: "myWiggle1"}, "zoomOut")
-    tl.to ("#smoke2", {duration: 2, x:"+=6", y: "+=3", ease: "myWiggle2"}, "zoomOut")
-    tl.to ("#smoke3", {duration: 2, x:"+=3", y: "+=4", ease: "myWiggle1"}, "zoomOut")
-    tl.to ("#smoke4", {duration: 2, x:"+=5", y: "+=5", ease: "myWiggle2"}, "zoomOut")
+    tl.to ("#rocket", {duration: 2, x: "+=3.5", ease: "myWiggle1"}, "zoomOut")
+      .to ("#smoke1", {duration: 2, x:"+=4", ease: "myWiggle1"}, "zoomOut")
+      .to ("#smoke2", {duration: 2, y: "+=6", ease: "myWiggle2"}, "zoomOut")
+      .to ("#smoke3", {duration: 2, x:"+=3", ease: "myWiggle1"}, "zoomOut")
+      .to ("#smoke4", {duration: 2, y: "+=5", ease: "myWiggle2",OnComplete: surroundShake}, "zoomOut")
     
-    tl.to ("#foreground", {duration: 1.5, scale:2.5, y: "-=200", ease: "power4.out"}, "zoomOut")
-    tl.to ("#rocket", {duration: 1.5, scale:2.5, y: "-=275", ease: "power4.out"}, "zoomOut")
-    tl.to ("#smoke", {duration: 1.5, scale:2.5, y: "-=100", ease: "power4.out"}, "zoomOut")
-    tl.to ("#clouds_all", {duration: 1.5, scale:2.5, y: "-=1000", ease: "power4.out"}, "zoomOut")
-    tl.to ("#moon", {duration: 1.5, scale:2.5, y: "-=1000", ease: "power4.out"}, "zoomOut")
-    tl.to ("#midground", {duration: 1.5, scale:2.5, y: "-=300",transformOrigin: "center", ease: "power4.out"}, "zoomOut")
-    tl.to ("#background", {duration: 1.5, scale:2.5, y: "-=1500", ease: "power4.out"}, "zoomOut")
+      .to ("#foreground", {duration: 1.5, scale:2.5, y: "-=200", ease: "power4.out"}, "zoomOut")
+      .to ("#rocket", {duration: 1.5, scale:2.5, y: "-=275", ease: "power4.out"}, "zoomOut")
+      .to ("#smoke", {duration: 1.5, scale:2.5, y: "-=100", ease: "power4.out"}, "zoomOut")
+      .to ("#clouds_all", {duration: 1.5, scale:2.5, y: "-=1000", ease: "power4.out"}, "zoomOut")
+      .to ("#moon", {duration: 1.5, scale:2.5, y: "-=1000", ease: "power4.out"}, "zoomOut")
+      .to ("#midground", {duration: 1.5, scale:2.5, y: "-=300",transformOrigin: "center", ease: "power4.out"}, "zoomOut")
+      .to ("#background", {duration: 1.5, scale:2.5, y: "-=1500", ease: "power4.out"}, "zoomOut")
 
-    tl.to ("#rocket", {duration: 2, x: "+=2", ease: "myWiggle1"}, "zoomIn")
-    tl.to ("#smoke1", {duration: 2, x:"+=4", y: "+=5", ease: "myWiggle1"}, "zoomIn")
-    tl.to ("#smoke2", {duration: 2, x:"+=6", y: "+=3", ease: "myWiggle2"}, "zoomIn")
-    tl.to ("#smoke3", {duration: 2, x:"+=3", y: "+=4", ease: "myWiggle1"}, "zoomIn")
-    tl.to ("#smoke4", {duration: 2, x:"+=5", y: "+=5", ease: "myWiggle2"}, "zoomIn")
+      .to ("#rocket", {duration: 2, x: "+=3.5", ease: "myWiggle1"}, "zoomIn")
+      .to ("#smoke1", {duration: 2, x:"+=4", ease: "myWiggle1"}, "zoomIn")
+      .to ("#smoke2", {duration: 2, y: "+=6", ease: "myWiggle2"}, "zoomIn")
+      .to ("#smoke3", {duration: 2, x:"+=3", ease: "myWiggle1"}, "zoomIn")
+      .to ("#smoke4", {duration: 2, y: "+=5", ease: "myWiggle2"}, "zoomIn")
 
-    tl.to ("#foreground", {duration: 1.5, scale:1, y: "+=200", ease: "power4.out"}, "zoomIn")
-    tl.to ("#rocket", {duration: 1.5, scale:1, y: "+=275", ease: "power4.out"}, "zoomIn")
-    tl.to ("#smoke", {duration: 1.5, scale:1, y: "+=100", ease: "power4.out"}, "zoomIn")
-    tl.to ("#clouds_all", {duration: 1.5, scale:1, y: "+=1000", ease: "power4.out"}, "zoomIn")
-    tl.to ("#moon", {duration: 1.5, scale:1, y: "+=1000", ease: "power4.out"}, "zoomIn")
-    tl.to ("#midground", {duration: 1.5, scale:1, y: "+=300",transformOrigin: "center", ease: "power4.out"}, "zoomIn")
-    tl.to ("#background", {duration: 1.5, scale:1, y: "+=1500", ease: "power4.out"}, "zoomIn")
+      .to ("#foreground", {duration: 1.5, scale:1, y: "+=200", ease: "power4.out"}, "zoomIn")
+      .to ("#rocket", {duration: 1.5, scale:1, y: "+=275", ease: "power4.out"}, "zoomIn")
+      .to ("#smoke", {duration: 1.5, scale:1, y: "+=100", ease: "power4.out"}, "zoomIn")
+      .to ("#clouds_all", {duration: 1.5, scale:1, y: "+=1000", ease: "power4.out"}, "zoomIn")
+      .to ("#moon", {duration: 1.5, scale:1, y: "+=1000", ease: "power4.out"}, "zoomIn")
+      .to ("#midground", {duration: 1.5, scale:1, y: "+=300",transformOrigin: "center", ease: "power4.out"}, "zoomIn")
+      .to ("#background", {duration: 1.5, scale:1, y: "+=1500", ease: "power4.out"}, "zoomIn")
     
       
       
@@ -164,13 +164,13 @@ ready(() => {
       },
       ease: "RocketEase"
       
-
+      ,OnComplete: moonFloat
     },"shakecontinued")
 
-    tl.to ("#smoke1", {duration: 2.5, x:"+=4", y: "+=5", ease: "myWiggle1"}, "shakecontinued")
-    tl.to ("#smoke2", {duration: 2.5, x:"+=6", y: "+=3", ease: "myWiggle2"}, "shakecontinued")
-    tl.to ("#smoke3", {duration: 2.5, x:"+=3", y: "+=4", ease: "myWiggle1"}, "shakecontinued")
-    tl.to ("#smoke4", {duration: 2.5, x:"+=5", y: "+=5", ease: "myWiggle2"}, "shakecontinued")
+      .to ("#smoke1", {duration: 2.5, x:"+=4", y: "+=5", ease: "myWiggle1"}, "shakecontinued")
+      .to ("#smoke2", {duration: 2.5, x:"+=6", y: "+=3", ease: "myWiggle2"}, "shakecontinued")
+      .to ("#smoke3", {duration: 2.5, x:"+=3", y: "+=4", ease: "myWiggle1"}, "shakecontinued")
+      .to ("#smoke4", {duration: 2.5, x:"+=5", y: "+=5", ease: "myWiggle2"}, "shakecontinued")
     
     
 
@@ -204,7 +204,7 @@ ready(() => {
     .to ("#landscape_dark", {duration: 1,  y: "+=500", ease: "bounce.out"},"-=0.750")
     .to ("#mountains", {duration: 1,  y: "+=750", ease: "bounce.out"},"-=0.750")
     .to ("#clouds_all", {duration: 1,  y: "+=1000", ease: "bounce.out"},"-=0.750")
-    .to ("#moon", {duration: 1,  y: "+=1000", ease: "bounce.out"},"-=0.750")
+    .to ("#moon", {duration: 1,  y: "+=1200", ease: "bounce.out"},"-=0.750")
     .to ("#background", {duration: 2, alpha:0},"-=1")
 
 
@@ -212,6 +212,44 @@ ready(() => {
         return tl;
 
       }
+
+    //*********** controlClouds ****************
+      function surroundShake (){
+
+        console.log ('SHOW TIME');
+        gsap.set(".midground", {display:"block"});
+        surroundTL.to ("#landscape_light",{duration:4, x: "-=1", ease: "myWiggle2"}, "surround")
+                  .to ("#landscape_dark",{duration:4, x: "-=1", ease: "myWiggle2"}, "surround")
+                  .to ("#foreground",{duration:4, x: "-=1", ease: "myWiggle2"}, "surround")
+        surroundTL.play()
+
+      }
+
+      //*********** surroundShake ****************
+      function controlClouds (){
+
+        console.log ('SHOW TIME');
+        gsap.set(".clouds_all", {display:"block"});
+        cloudsTL.to ("#cloud_right2",{duration:20, x: "-=100", ease: "CloudWiggle"}, "cloudmove")
+                .to ("#cloud_right1",{duration:20, x: "-=75", ease: "CloudWiggle"}, "cloudmove")
+                .to ("#cloud_left1",{duration:20, x: "+=50", ease: "CloudWiggle"}, "cloudmove")
+                .to ("#cloud_left2",{duration:20, x: "+=100", ease: "CloudWiggle"}, "cloudmove")
+        cloudsTL.play()
+
+      }
+
+    //*********** moonFloat ****************
+
+        function moonFloat (){
+
+        console.log ('SHOW TIME');
+        gsap.set(".moon", {display:"block"});
+        moonFloatTL.to ("#moon",{duration:6, y: "-=25", ease: "myWiggle4"})
+        moonFloatTL.play()
+
+      }
+
+
   //1. set initial properties
   init();
 
@@ -221,7 +259,7 @@ ready(() => {
   //3. BUILD Main timeline
   mainTL.add(fadeInTL())
         .add(zoomTL())
-        .add(rocketTL())
+        .add(rocketTL()) 
         .add(liftOffTL(),"-=1.50")
         .add(finalFallTL(),"-=.35")
         .add(fallOffTL())
